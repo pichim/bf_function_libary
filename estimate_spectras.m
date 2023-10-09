@@ -45,4 +45,8 @@ function [Pavg, freq] = estimate_spectras(inp, window, Noverlap, Nest, Ts)
     df = 1/(Nest*Ts);
     freq = (0:df:1/Ts-df).';
 
+    ind = freq <= 1 / (2 * Ts);
+    freq = freq(ind);
+    Pavg = Pavg(ind, :);
+
 end
