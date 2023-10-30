@@ -1,4 +1,4 @@
-function a = get_my_colors
+function a = get_my_colors(ind)
 
 %% R2022a default color order
 
@@ -38,6 +38,12 @@ a = [[0   0   255];...    % 1  blau
      [255 102 178];...    % 11 rosa
      [0   170 170];...    % 12 dunkel cyan
      [170 170 0  ]]./255; % 13 dunkel gelb
+
+%%
+
+    if (exist('ind', 'var') && ~isempty(ind))
+        a = a(ind, :);
+    end  
 
 end
 
