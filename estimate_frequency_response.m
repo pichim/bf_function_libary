@@ -19,6 +19,7 @@ function [G, C, freq, Pavg] = estimate_frequency_response(inp, out, window, Nove
     Navg = 0;
     ind_start = 1;
     ind_end   = Nest;
+    Ndelta   = Nest - Noverlap;
     while ind_end <= Ndata
 
         ind = ind_start:ind_end;
@@ -39,8 +40,8 @@ function [G, C, freq, Pavg] = estimate_frequency_response(inp, out, window, Nove
         Pavg = Pavg + [U.*conj(U) Y.*conj(U) Y.*conj(Y)];
         Navg = Navg + 1;
 
-        ind_start = ind_start + Nest - Noverlap;
-        ind_end   = ind_end   + Nest - Noverlap;
+        ind_start = ind_start + Ndelta;
+        ind_end   = ind_end   + Ndelta;
 
     end
 
