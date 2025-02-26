@@ -160,14 +160,17 @@ function [Cpi, Cd, Gf, PID, para_used] = calculate_transfer_functions(para, ind_
 
     % PID parameters
     pid_axis = {'rollPID', 'pitchPID', 'yawPID'};
-    if (para.(pid_axis{ind_ax})(3) ~= para.(pid_axis{ind_ax})(4))
-        warning([pid_axis{ind_ax}, ' different D gains']);
+    if (length(para.(pid_axis{ind_ax})) == 5)
+        if (para.(pid_axis{ind_ax})(3) ~= para.(pid_axis{ind_ax})(4))
+            warning([pid_axis{ind_ax}, ' different D gains']);
+        end
+        % remove dynamic D-Term
+        para.(pid_axis{ind_ax}) = para.(pid_axis{ind_ax})([1 2 3 5]);
     end
-    if para.(pid_axis{ind_ax})(5) ~= 0
+    if para.(pid_axis{ind_ax})(4) ~= 0
         warning([pid_axis{ind_ax}, ' FF is not zero']);
     end
-    % remove dynamic D-Term and insert 0 for FF
-    para.(pid_axis{ind_ax}) = para.(pid_axis{ind_ax})([1 2 3 5]);
+    % Insert 0 for FF
     PID = para.(pid_axis{ind_ax}) .* [get_pid_scale(ind_ax), 0];
     
 
